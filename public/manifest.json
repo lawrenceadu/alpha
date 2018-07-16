@@ -1,0 +1,26 @@
+{
+    "lang": "en",
+    "dir": "ltr",
+    "name": "",
+    "description": "",
+    "short_name": "",
+    "icons": [
+        {
+            "src": "assets/img/logo/logo.png",
+            "sizes": "36x36",
+            "type": "image/png"
+        }
+    ],
+    "scope": "/",
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "theme_color": "#F44336",
+    "background_color": "#fff",
+    "serviceworker": {
+        "src": "sw.js",
+        "scope": "/",
+        "use_cache": true
+    },
+    "prefer_related_applications": false
+}

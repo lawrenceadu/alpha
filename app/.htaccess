@@ -1,0 +1,6 @@
+Options -Indexes 
+Deny from all
+
+<Files subdirectory/*>
+    deny from all
+</Files>

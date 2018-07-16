@@ -1,0 +1,23 @@
+*::-webkit-scrollbar-track{
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-radius: 0px;
+  background-color: transparent;
+}
+
+*::-webkit-scrollbar{
+  width: 7px;
+  height: 3px;
+  background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb{
+  border-radius: 0px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  background-color: lighten(black, 80%);
+}
+
+*::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(0,0,0,0.1); 
+}
