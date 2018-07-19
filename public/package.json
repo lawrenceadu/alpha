@@ -17,7 +17,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://gitlab.com/larrybuntus/alpha.git"
+        "url": "https://github.com/lawrenceadu/alpha"
     },
     "dependencies": {
         "pump": "^2.0.0"
