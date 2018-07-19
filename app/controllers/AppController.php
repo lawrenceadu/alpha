@@ -6,7 +6,14 @@
         }
 
         public function index(){
-            $this->view("app/index.html");   
+            // you can pass data here
+            // $data["title"] = "Hello world";
+            // $data["img"] = "path/to/img";
+            // $data["keywords"] = "Hello world";
+            // $data["description"] = "Hello world";
+            $data = null;
+
+            $this->view("app/index.html", $data);   
         }
     }
     
