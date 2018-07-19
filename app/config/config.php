@@ -1,6 +1,6 @@
 <?php 
     // get config.ini
-    // $config = parse_ini_file(__dir__.'/config.ini');
+    $config = parse_ini_file(__dir__.'/config.ini');
     
     // check protocol
     $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
