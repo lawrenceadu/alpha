@@ -40,7 +40,7 @@
 		}
 
 		public function update($params) {
-			$this->db->query("UPDATE examples SET colum = :column WHERE id = :id");
+			$this->db->query("UPDATE examples SET column = :column WHERE id = :id");
 
 			foreach ($params as $key => $value)
 				$this->db->bind(":{$key}", $value);
