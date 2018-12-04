@@ -1,57 +1,70 @@
-<?php  
-	/**
-	 * @author Lawrence Kweku Adu
-	 */
-	class Example
-	{
-		
-		function __construct()
-		{
-			$this->db = new Database();
-		}
+<?php
+    /**
+     * @author Lawrence Kweku Adu
+     */
 
-		public function all($offset = 0, $limit = 10) {
-			$this->db->query("SELECT * FROM examples WHERE is_archived = false");
-			$result = $this->db->result();
+namespace App\Models;
 
-			if ($this->db->rowcount() > 0)
-				return $result;
-			else
-				return false;
-		}
+use App\Lib\Database;
 
-		public function find($id){
-			$this->db->query("SELECT * FROM examples WHERE id = :id AND is_archived = false");
-			$this->db->bind(":id", $id);
-			$row = $this->db->row();
+class Example
+{
+        
+    function __construct()
+    {
+        $this->db = new Database();
+    }
 
-			if ($this->db->rowcount() > 0)
-				return $row;
-			else 
-				return false;
-		}
+    public function all($offset = 0, $limit = 10)
+    {
+        $this->db->query("SELECT * FROM examples WHERE is_archived = false");
+        $result = $this->db->result();
 
-		public function create($params) {
-			$this->db->query("INSERT INTO examples() VALUES ()");
-			foreach ($params as $key => $value)
-				$this->db->bind(":{$key}", $value);
+        if ($this->db->rowcount() > 0) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
 
-			return $this->db->execute();
-		}
+    public function find($id)
+    {
+        $this->db->query("SELECT * FROM examples WHERE id = :id AND is_archived = false");
+        $this->db->bind(":id", $id);
+        $row = $this->db->row();
 
-		public function update($params) {
-			$this->db->query("UPDATE examples SET column = :column WHERE id = :id");
+        if ($this->db->rowcount() > 0) {
+            return $row;
+        } else {
+            return false;
+        }
+    }
 
-			foreach ($params as $key => $value)
-				$this->db->bind(":{$key}", $value);
+    public function create($params)
+    {
+        $this->db->query("INSERT INTO examples() VALUES ()");
+        foreach ($params as $key => $value) {
+            $this->db->bind(":{$key}", $value);
+        }
 
-			return $this->db->execute();
-		}
+        return $this->db->execute();
+    }
 
-		public function destroy($id) {
-			$this->db->query("UPDATE examples SET is_archived = true WHERE id = :id");
-			$this->db->bind(":id", $id);
-			return $this->db->execute();
-		}
-	}
-?>
+    public function update($params)
+    {
+        $this->db->query("UPDATE examples SET column = :column WHERE id = :id");
+
+        foreach ($params as $key => $value) {
+            $this->db->bind(":{$key}", $value);
+        }
+
+        return $this->db->execute();
+    }
+
+    public function destroy($id)
+    {
+        $this->db->query("UPDATE examples SET is_archived = true WHERE id = :id");
+        $this->db->bind(":id", $id);
+        return $this->db->execute();
+    }
+}
