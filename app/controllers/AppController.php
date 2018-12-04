@@ -1,20 +1,20 @@
-<?php 
-    class App extends Base
+<?php
+
+namespace App\Controllers;
+
+use App\Lib\Base as Base;
+
+// use App\Helpers\Example;
+class App extends Base
+{
+    public function __construct()
     {
-        public function __construct(){
-            // $this->appModel = $this->model('Example');
-        }
-
-        public function index(){
-            // you can pass data here
-            // $data["title"] = "Hello world";
-            // $data["img"] = "path/to/img";
-            // $data["keywords"] = "Hello world";
-            // $data["description"] = "Hello world";
-            $data = null;
-
-            $this->view("app/index.html", $data);   
-        }
+        // $this->carousel = $this->model('App\Models\ModelName');
+        // $this->example_helper = new Example();
     }
-    
-?>
+
+    public function index()
+    {
+        $this->view("app/index.html");
+    }
+}
