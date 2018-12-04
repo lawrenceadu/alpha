@@ -3,5 +3,7 @@
     require_once dirname(__dir__)."/app/bootstrap.php";
 
     // init core lib
-    $core = new Core;
+    use App\Lib\Core;
+    // init core lib
+    $core = new Core();
 ?>
