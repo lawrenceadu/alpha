@@ -1,65 +1,76 @@
-<?php 
+<?php
     /*
     * App Core Class
     * Creates URL & loads core controller
     * URL FORMAT  /controller/method/params
     */
 
-    class Core {
-        protected $currentController   =   'App';
-        protected $currentMethod       =   'index';
-        protected $params              =   [];
+namespace App\Lib;
 
-        public function __construct(){
-            $url = $this->getUrl();
+use RecursiveDirectoryIterator as RecursiveDirectory;
+use RecursiveIteratorIterator as RecursiveIterator;
+use RegexIterator as Regex;
+use RecursiveRegexIterator as RecursiveRegex;
+use App\Routes as Routes;
+class Core
+{
+    public function __construct()
+    {
+        // assign get url to url variable
+        list($url, $path)  = $this->getUrl();
 
-            $url[0] = $this->formatURL($url[0]);
+        // Recursive Directory Iterator to get all Controller files
+        $Directory = new RecursiveDirectory(dirname(__DIR__) . '/controllers');
+        $Iterator  = new RecursiveIterator($Directory);
+        $Regex     = new Regex($Iterator, '/^.+\.php$/i', RecursiveRegex::GET_MATCH);
 
-            // Look in controllers for controller
-            if(file_exists(dirname(__dir__)."/controllers/" . ucwords($url[0]) . "Controller.php")){
-                // if controller exists, set as controller
-                $this->currentController = ucwords($url[0]);
-                // unset 0 index
-                unset($url[0]);
-            }
-            
+        if($url[0] == "api")
+        $Routes = new Routes\Api($url, $path);
+        else    
+        $Routes = new Routes\Web($url, $path);
 
-            // Require the controller
-            require_once dirname(__dir__)."/controllers/" . $this->currentController . "Controller.php";
+        // Get all the helpers
+        foreach (glob(dirname(__dir__) . '/helpers/*.php') as $key => $helpers)
+            require_once $helpers;
 
-            // instantiate controller class
-            $this->currentController = new $this->currentController;
+        // Look in controllers for controller
+        foreach ($Regex as $path_to_file)
+            require_once $path_to_file[0];
 
-            // check for the controller method to load
-
-                if (isset($url[1])){
-                    // check if method exist
-                    if(method_exists($this->currentController, $url[1])){
-                        $this->currentMethod = $url[1];
-                        // unset 1 url index
-                        unset($url[1]);
-                    }
-                }
-            
-
-            // get params
-            $this->params = $url ? array_values($url) : [];
-
-            // call a callback with array of params
-            call_user_func_array([$this->currentController, $this->currentMethod], $this->params);
-        }
-
-        public function getUrl(){
-            if (isset($_GET["url"])){
-                $url = trim($_GET["url"], "/");
-                $url = filter_var($url, FILTER_SANITIZE_URL);
-                $url = explode( "/", $url);
-
-                return $url;
-            }
-        }
-
-        private function formatURL($url){
-            return str_replace(" ", "", ucwords(str_replace("-", " ", $url)));
+        switch ($_SERVER["REQUEST_METHOD"]){
+            case "GET":
+                $Routes::get($url, $path, GET);
+                break;
+            case "POST":
+                $Routes::post($url, $path, POST);
+                break;
+            case "PUT":
+                $Routes::post($url, $path, PUT);
+                break;
+            case "DELETE":
+                $Routes::delete($url, $path, DELETE);
+                break;
         }
     }
+
+    public function getUrl()
+    {
+        if (isset($_GET["url"])) {
+            $url = trim($_GET["url"], "/");
+
+            // get position of ?
+            $position = strpos($url, '?');
+
+            if(!empty($position))
+                $path = substr($url, 0, strpos($url, '?'));
+            else
+                $path = $url;
+            
+            
+            $url = filter_var($path, FILTER_SANITIZE_URL);
+            $url = explode("/", $url);
+
+            return [$url, $path];
+        }
+    }
+}
