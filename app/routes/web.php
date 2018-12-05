@@ -2,57 +2,29 @@
     namespace App\Routes;
 
     use App\Controllers as Controller;
+    use \Klein\Klein;
 
     class Web {
         public function __construct()
         {
-            
+            $this->klein = new Klein();
         }
 
-        public static function get($url, $path) {
-            // call setter
-            $currentController = new Controller\App();
-            $currentMethod     = index;
-            $params            = [];
-            
-            $start = $url[0];
-            unset($url[0]);
-
-            switch ($start) {
-                default:
-                    list($currentController, $currentMethod, $url) = [$currentController, $currentMethod, $url];
-                    break;                
-            }
-            
-            $params = $url ? array_values($url) : [];
-
-            call_user_func_array([$currentController, $currentMethod], $params);
+        public function arr($controller, $method, $params = [])
+        {
+            return \call_user_func_array([$controller, $method], $params);
         }
 
-        public static function post($url, $path) {
-            $currentController = new Controller\App();
-            $currentMethod     = index;
-            $params            = [];
+        public function request() {
+            $this->klein->respond("GET", "/?", function($request, $response) {
+                $this->arr(new Controller\App(), index);
+            });
 
-            $start = $url[0];
-            unset($url[0]);
+            $this->klein->with('/hello-world', function() use ($klein) {
+                return "hello world";
+            });
 
-            switch ($start) {
-                default:
-                    list($currentController, $currentMethod, $url) = [$currentController, $currentMethod, $url];
-                    break;
-            }
-
-            $params = $url ? array_values($url) : [];
-            call_user_func_array([$currentController, $currentMethod], $params);
-        }
-
-        public static function put($url, $path) {
-
-        }
-
-        public static function delete($url, $path) {
-
+            $this->klein->dispatch();
         }
     }
 ?>

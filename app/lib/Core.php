@@ -37,20 +37,7 @@ class Core
         foreach ($Regex as $path_to_file)
             require_once $path_to_file[0];
 
-        switch ($_SERVER["REQUEST_METHOD"]){
-            case "GET":
-                $Routes::get($url, $path, GET);
-                break;
-            case "POST":
-                $Routes::post($url, $path, POST);
-                break;
-            case "PUT":
-                $Routes::post($url, $path, PUT);
-                break;
-            case "DELETE":
-                $Routes::delete($url, $path, DELETE);
-                break;
-        }
+        $Routes->request();
     }
 
     public function getUrl()
