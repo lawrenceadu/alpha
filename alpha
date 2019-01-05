@@ -1,0 +1,120 @@
+<?php 
+    namespace CLI;
+
+    class AlphaCLI
+    {
+        public function __construct()
+        {
+            $this->controller_path = __dir__.'/app/controllers/';
+            $this->migration_path = __dir__.'/app/migration/';
+            $this->model_path = __dir__.'/app/models/';
+        }
+
+        public function generate($command, $argv)
+        {
+            switch (strtolower($command)) {
+                case 'controller':
+                    list($dirname, $filename) = $this->dir_and_file($argv[0], $this->controller_path, 'Controller.php');
+
+                    if (!file_exists($dirname)):
+                        mkdir($dirname, 0755, true);
+                    endif;
+
+                    if(!file_exists($dirname . '/' . $filename)):
+                        touch($dirname . '/' . $filename);
+                    else:
+                        echo "Controller already exists";
+                        return false;
+                    endif;
+
+                    echo "{$filename} controller created successfully";
+                        break;
+                default:
+                    break;
+            }
+        }
+
+        public function delete($command, $argv)
+        {
+            switch (strtolower($command)) {
+                case 'controller':
+                    list($dirname, $filename) = $this->dir_and_file($argv[0], $this->controller_path, 'Controller.php');
+
+                    if(file_exists($dirname . '/' . $filename)):
+                        unlink($dirname . '/' . $filename);
+
+                        $is_empty = !(new \FilesystemIterator($dirname))->valid();
+
+                        if ($is_empty === true):
+                            rmdir($dirname);
+                        endif;
+                    else:
+                        echo "Controller does not exists";
+                        return false;
+                    endif;
+
+                    echo "{$filename} controller deleted successfully";
+                    break;
+                
+                default:
+                    # code...
+                    break;
+            }
+        }
+
+        public function migrate()
+        {
+            shell_exec("php app/migration/Schema.php");
+            echo "migration complete";
+        }
+
+        private function dir_and_file($arg, $path, $file)
+        {
+            $path_to_controller = strtolower($arg).$file;
+            $path_info = pathinfo($path_to_controller);
+
+            $dirname = $path_info["dirname"] == "." ? $path : $path . $path_info["dirname"];
+            $filename = ucwords(strtolower(chop($path_info['filename'], 'Controller'))).'Controller.php';
+
+            return [$dirname, $filename];
+        }
+    }
+    
+
+    $cli = new AlphaCLI();
+
+    $command = $argv[1];
+    $subcommand = null;
+
+    if ($command !== NULL || !empty($command)):
+        $commands = explode(":", $command);
+        
+        $command = $commands[0];
+        $subcommand = isset($commands[1])? $commands[1] : null;
+
+        // remove unnecessary elements in array
+        unset($argv[0], $argv[1]);
+
+        switch ($command) {
+            case 'g':
+            case 'generate':
+                $cli->generate($subcommand, array_values($argv));
+                break;
+            case 'd':
+            case 'delete':
+                $cli->delete($subcommand, array_values($argv));
+                break;
+            case 'migrate':
+                $cli->migrate();
+                break;
+            case 'serve':
+                echo shell_exec("php -S localhost:7500");
+                break;
+            default:
+                
+                break;
+        }
+    else:
+
+    endif;
+?>
