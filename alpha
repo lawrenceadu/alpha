@@ -80,7 +80,6 @@
         }
     }
     
-
     $cli = new AlphaCLI();
 
     $command = $argv[1];
@@ -108,7 +107,27 @@
                 $cli->migrate();
                 break;
             case 'serve':
-                echo shell_exec("php -S localhost:7500");
+                if (isset($argv[2])):
+                    switch ($argv[2]) {
+                        case '-p':
+                            if (is_numeric($argv[3])):
+                                echo shell_exec("php -S localhost:{$argv[3]}");
+                            else:
+                                echo "Port entered is not numeric";
+                            endif;
+                        break;
+                    }
+                else:
+                    echo shell_exec("php -S localhost:7500");
+                endif;
+
+                break;
+            case 'gulp':
+                echo shell_exec("cd public && gulp");
+                break;
+            case 'init':
+                echo \shell_exec("composer update -d app/lib");
+                echo \shell_exec("cd public && npm install");
                 break;
             default:
                 
