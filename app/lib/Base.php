@@ -26,6 +26,7 @@ class Base
 
     public function view($view, $data = [])
     {
+        extract($data, EXTR_PREFIX_SAME, "wddx");
         if (file_exists(dirname(__dir__)."/views/{$view}.php"))
             include_once dirname(__dir__)."/views/{$view}.php";
         else
@@ -116,5 +117,10 @@ class Base
         echo json_encode($return);
 
         exit();
+    }
+    
+    public function image_path($path_to_image)
+    {
+        return __URLROOT__.'/public/assets/img/' . $path_to_image;
     }
 }
