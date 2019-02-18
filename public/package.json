@@ -9,7 +9,7 @@
         "babel-core": "latest",
         "babel-preset-env": "^1.6.1",
         "babel-preset-latest": "^6.24.1",
-        "gulp": "latest",
+        "gulp": "^3.9.1",
         "gulp-babel": "^7.0.0",
         "gulp-manifest": "^0.1.1",
         "gulp-sass": "^3.1.0",
@@ -18,8 +18,5 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/lawrenceadu/alpha"
-    },
-    "dependencies": {
-        "pump": "^2.0.0"
     }
 }
