@@ -17,11 +17,7 @@
 
         public function request() {
             $this->klein->respond("GET", "/?", function($request, $response) {
-                $this->arr(new Controller\App(), index);
-            });
-
-            $this->klein->with('/hello-world', function() use ($klein) {
-                return "hello world";
+                $this->arr(new Controller\Index(), "index", [$request, $response]);
             });
 
             $this->klein->dispatch();
