@@ -18,6 +18,17 @@
 
                     if (!file_exists($dirname)):
                         mkdir($dirname, 0755, true);
+
+                        $paths = explode('/', $dirname);
+                        $base_controller = ucwords(strtolower(end($paths)));
+                        $children_path = end($paths);
+
+                        $base_path = str_replace("{$children_path}", "", $dirname);
+
+
+                        if(!file_exists("{$base_path}{$base_controller}Controller.php")){
+                            touch("{$base_path}{$base_controller}Controller.php");
+                        }
                     endif;
 
                     if(!file_exists($dirname . '/' . $filename)):
@@ -46,6 +57,11 @@
                         $is_empty = !(new \FilesystemIterator($dirname))->valid();
 
                         if ($is_empty === true):
+                            $path = explode('/', $dirname);
+                            $base_controller = ucwords(strtolower(end($path))) . "Controller.php";
+                            $base_path = str_replace(end($path), "", $dirname);
+
+                            unlink($base_path . $base_controller);
                             rmdir($dirname);
                         endif;
                     else:
