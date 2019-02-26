@@ -4,9 +4,7 @@
 const gulp = require('gulp');
 const uglify = require("gulp-uglify");
 const sass = require("gulp-sass");
-const pump = require("pump");
 const babel = require("gulp-babel");
-const path = require("path");
 
 gulp.task("default", ["watch"]);
 
@@ -18,7 +16,6 @@ gulp.task("compress", function (cb) {
         .pipe(gulp.dest("./assets/js"));
 });
 
-// sass preprocessor
 gulp.task('sass', function () {
     return gulp
         .src('./assets/src/**/*.scss')
@@ -29,4 +26,4 @@ gulp.task('sass', function () {
 gulp.task('watch', function () {
     gulp.watch("./assets/src/app.js", ['compress']);
     gulp.watch("./assets/src/**/*.scss", ["sass"]);
-}); 
+});

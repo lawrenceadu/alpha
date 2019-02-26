@@ -45,6 +45,10 @@ class Base
         $upload_ok          =   1;                                                      // upload checker
         $image_file_type    =   strtolower(pathinfo($target_file, PATHINFO_EXTENSION));  // file type
             
+        if (!file_exists($path)):
+            mkdir($path, 0755, true);
+        endif;
+        
         // Check if file already exists
         if (file_exists($target_file)) {
             $upload_ok = 0;
