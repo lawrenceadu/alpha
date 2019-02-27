@@ -1,3 +1,5 @@
+/*jshint esversion: 6 */
+
 $(document).ready(function(){
 
     $.delete = function(url, data, callback, type){
@@ -5,7 +7,7 @@ $(document).ready(function(){
         if ( $.isFunction(data) ){
             type = type || callback,
                 callback = data,
-                data = {}
+                data = {};
         }
         
         return $.ajax({
@@ -15,7 +17,7 @@ $(document).ready(function(){
             data: data,
             contentType: type
         });
-    }
+    };
 
 	$(document).on("submit", "form", function(e){
 		e.preventDefault();

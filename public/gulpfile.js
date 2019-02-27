@@ -1,5 +1,4 @@
-/* eslint-env node */
-'use strict';
+/*jshint esversion: 6 */
 
 const gulp   = require('gulp');
 const uglify = require("gulp-uglify");
