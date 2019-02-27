@@ -1,10 +1,27 @@
 $(document).ready(function(){
 
+    $.delete = function(url, data, callback, type){
+ 
+        if ( $.isFunction(data) ){
+            type = type || callback,
+                callback = data,
+                data = {}
+        }
+        
+        return $.ajax({
+            url: url,
+            type: 'DELETE',
+            success: callback,
+            data: data,
+            contentType: type
+        });
+    }
+
 	$(document).on("submit", "form", function(e){
 		e.preventDefault();
 
 		let form = this;
-		let url = $(form).attr("action");
+		let url  = $(form).attr("action");
 
 		switch (url){
 			case "":
@@ -18,7 +35,7 @@ $(document).ready(function(){
 		let data = new FormData(form);
 
 		$.ajax({
-            type: "POST",
+            type: $(this).attr("method"),
             url: url,
             data: data,
             cache: !1,
@@ -29,7 +46,6 @@ $(document).ready(function(){
 
             },
             success: function (data) {
-
                 $("#receiver").html(data);
             },
             error: function (data, timeout, a) {
@@ -41,6 +57,14 @@ $(document).ready(function(){
         e.preventDefault();
 
         $.get($(this).attr("href"), function(data){
+            $("#receiver").html(data);
+        });
+    });
+
+    $(document).on("click", ".delete", function(e){
+        e.preventDefault();
+
+        $.delete($(this).attr("href"), function(data){
             $("#receiver").html(data);
         });
     });

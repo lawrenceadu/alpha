@@ -1,19 +1,17 @@
 {
     "name": "Alpha",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "The Alpha Framework",
     "author": "Adu Lawrence Kweku",
     "license": "MIT",
     "homepage": "https://alpha.com",
     "devDependencies": {
-        "babel-core": "latest",
-        "babel-preset-env": "^1.6.1",
-        "babel-preset-latest": "^6.24.1",
-        "gulp": "^3.9.1",
-        "gulp-babel": "^7.0.0",
-        "gulp-manifest": "^0.1.1",
-        "gulp-sass": "^3.1.0",
-        "gulp-uglify": "^3.0.0"
+        "gulp": "^4.0.0",
+        "gulp-babel": "^8.0.0",
+        "gulp-sass": "^4.0.2",
+        "gulp-uglify": "^3.0.1",
+        "@babel/core": "^7.0.0",
+        "@babel/preset-env": "^7.0.0"
     },
     "repository": {
         "type": "git",

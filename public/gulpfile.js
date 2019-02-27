@@ -1,17 +1,15 @@
 /* eslint-env node */
 'use strict';
 
-const gulp = require('gulp');
+const gulp   = require('gulp');
 const uglify = require("gulp-uglify");
-const sass = require("gulp-sass");
-const babel = require("gulp-babel");
-
-gulp.task("default", ["watch"]);
+const sass   = require("gulp-sass");
+const babel  = require("gulp-babel");
 
 gulp.task("compress", function (cb) {
     return gulp
         .src("./assets/src/app.js")
-        .pipe(babel({ presets: ["babel-preset-es2015", "babel-preset-es2016", "babel-preset-es2017"].map(require.resolve) }))
+        .pipe(babel({ presets: ["@babel/preset-env"].map(require.resolve) }))
         .pipe(uglify())
         .pipe(gulp.dest("./assets/js"));
 });
@@ -24,6 +22,8 @@ gulp.task('sass', function () {
 });
 
 gulp.task('watch', function () {
-    gulp.watch("./assets/src/app.js", ['compress']);
-    gulp.watch("./assets/src/**/*.scss", ["sass"]);
+    gulp.watch("./assets/src/app.js", gulp.parallel(['compress']));
+    gulp.watch("./assets/src/**/*.scss", gulp.parallel(["sass"]));
 });
+
+gulp.task("default", gulp.parallel(["watch"]));

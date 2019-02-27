@@ -3,6 +3,5 @@ public/node_modules
 public/lib/node_modules
 public/bin
 public/etc
-public/package-lock.json
 app/lib/vendor
 app/lib/composer.lock
