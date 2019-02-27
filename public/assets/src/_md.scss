@@ -1,23 +1,125 @@
-*::-webkit-scrollbar-track{
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  border-radius: 0px;
-  background-color: transparent;
+// Typography
+// font size
+@for $size from 10 to 100 {
+  .size-md-#{$size} {
+      font-size : #{$size}px!important;
+  }
 }
 
-*::-webkit-scrollbar{
-  width: 7px;
-  height: 3px;
-  background-color: transparent;
+// font weight
+@each $weight in (300, 400, 600, 700) {
+  .weight-md-#{$weight} {
+      font-weight : $weight!important;
+  }
 }
 
-*::-webkit-scrollbar-thumb{
-  border-radius: 0px;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  background-color: lighten(black, 80%);
+
+// inheritance
+.inherit {
+  &-md-height {
+      height  : inherit;
+  }
+
+  &-md-width {
+      width   : inherit;
+  }   
 }
 
-*::-webkit-scrollbar-thumb:window-inactive {
-  background: rgba(0,0,0,0.1); 
+// width and height
+.u-full {
+  &-md-width {
+      width   : 100%;
+  }
+
+  &-md-height {
+      height  : 100%;
+  }
+}
+
+
+@for $percentage from 0 to 100 {
+  .width-md-#{$percentage} {
+    width   : $percentage * 1%;
+  }
+
+  .height-md-#{$percentage} {
+    height  : $percentage * 1%;
+  }
+}
+
+// display
+.display {
+  &-md-block {
+      display : block;
+  }
+
+  &-md-inline-block {
+      display : inline-block;
+  }
+
+  &-md-flex {
+      display : -webkit-flex;
+      display : flex;
+  }
+}
+
+
+// position
+.position {
+  &-md-relative {
+      position  : relative;
+  }
+
+  &-md-absolute {
+      position  : absolute;
+  }
+
+  &-md-fixed {
+      position  : flex;
+  }
+}
+
+.vertically-md-center {
+    position: absolute!important;
+    width: auto!important;
+    top: 50%!important;
+    left: 50%!important;
+    transform: translate(-50%, -50%)!important;
+}
+
+// padding and margin
+@for $size from 0 to 100 {
+  // padding
+  .padding-top-md-#{$size} {
+      padding-top     : #{$size}px!important;
+  }
+
+  .padding-bottom-md-#{$size} {
+      padding-bottom  : #{$size}px!important;
+  }
+
+  .padding-right-md-#{$size} {
+      padding-right   : #{$size}px!important;
+  }
+
+  .padding-left-md-#{$size} {
+      padding-left    : #{$size}px!important;
+  }
+
+  // margin
+  .margin-top-md-#{$size} {
+      margin-top      : #{$size}px!important;
+  }
+
+  .margin-bottom-md-#{$size} {
+      margin-bottom   : #{$size}px!important;
+  }
+
+  .margin-right-md-#{$size} {
+      margin-right    : #{$size}px!important;
+  }
+
+  .margin-left-md-#{$size} {
+      margin-left     : #{$size}px!important;
+  }
 }

@@ -1,0 +1,130 @@
+header, main, footer {
+    padding-left    :   300px;
+}
+
+// Typography
+// font size
+@for $size from 10 to 100 {
+    .size-lg-#{$size} {
+        font-size   :   $size;
+    }
+  }
+  
+// font weight
+@each $weight in (300, 400, 600, 700) {
+.weight-lg-#{$weight} {
+    font-weight :   $weight;
+}
+}
+
+
+// inheritance
+.inherit {
+    &-lg-height {
+        height  :   inherit;
+    }
+
+    &-lg-width {
+        width   :   inherit;
+    }   
+}
+
+// width and height
+.u-full {
+    &-lg-width {
+        width   :   100%;
+    }
+
+    &-lg-height {
+        height  :   100%;
+    }
+}
+
+@for $percentage from 0 to 100 {
+    .width-lg-#{$percentage} {
+      width     :   $percentage * 1%;
+    }
+  
+    .height-lg-#{$percentage} {
+      height    :   $percentage * 1%;
+    }
+  }
+
+
+// display
+.display {
+    &-lg-block {
+        display :   block;
+    }
+
+    &-lg-inline-block {
+        display :   inline-block;
+    }
+
+    &-lg-flex {
+        display :   -webkit-flex;
+        display :   flex;
+    }
+}
+
+
+// position
+.position {
+    &-lg-relative {
+        position    : relative;
+    }
+
+    &-lg-absolute {
+        position    : absolute;
+    }
+
+    &-lg-fixed {
+        position    : flex;
+    }
+}
+
+.vertically-lg-center {
+    position: absolute!important;
+    width: auto!important;
+    top: 50%!important;
+    left: 50%!important;
+    transform: translate(-50%, -50%)!important;
+}
+
+
+// padding and margin
+@for $size from 0 to 100 {
+    // padding
+    .padding-top-lg-#{$size} {
+        padding-top     : #{$size}px!important;
+    }
+  
+    .padding-bottom-lg-#{$size} {
+        padding-bottom  : #{$size}px!important;
+    }
+  
+    .padding-right-lg-#{$size} {
+        padding-right   : #{$size}px!important;
+    }
+  
+    .padding-left-lg-#{$size} {
+        padding-left    : #{$size}px!important;
+    }
+  
+    // margin
+    .margin-top-lg-#{$size} {
+        margin-top      : #{$size}px!important;
+    }
+  
+    .margin-bottom-lg-#{$size} {
+        margin-bottom   : #{$size}px!important;
+    }
+  
+    .margin-right-lg-#{$size} {
+        margin-right    : #{$size}px!important;
+    }
+  
+    .margin-left-lg-#{$size} {
+        margin-left     : #{$size}px!important;
+    }
+  }
