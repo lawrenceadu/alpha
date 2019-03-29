@@ -25,17 +25,28 @@ class Core
         $Regex     = new Regex($Iterator, '/^.+\.php$/i', RecursiveRegex::GET_MATCH);
 
         if($url[0] == "api")
-        $Routes = new Routes\Api($url, $path);
+            $Routes = new Routes\Api($url, $path);
         else    
-        $Routes = new Routes\Web($url, $path);
+            $Routes = new Routes\Web($url, $path);
 
         // Get all the helpers
         foreach (glob(dirname(__dir__) . '/helpers/*.php') as $key => $helpers)
             require_once $helpers;
 
         // Look in controllers for controller
+        $paths = [];
         foreach ($Regex as $path_to_file)
-            require_once $path_to_file[0];
+            $paths[] = $path_to_file[0];
+
+        sort($paths);
+
+        // require controllers
+
+        require_once __APPROOT__ . '/controllers/BaseController.php';
+
+        foreach($paths as $path)
+            if(strpos($path, 'BaseController') === false)
+                require_once $path;
 
         $Routes->request();
     }
