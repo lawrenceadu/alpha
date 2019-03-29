@@ -33,47 +33,52 @@ class Base
             include_once dirname(dirname(__dir__))."/public/html/404.html";
     }
 
-    public function img_upload($path, $image)
+    public function file_upload($path, $file, $file_category = "image")
     {
-        // get image details
-        $name = strtolower(strtotime(date("Y-m-d H:i:s")).'_'.$image["name"]);
-        $temp = $image["tmp_name"];
-        $size = $image["size"];
+        // get file details
+        $name = strtolower(strtotime(date("Y-m-d H:i:s")).'_'.str_replace(" ", "",$file["name"]));
+        $temp = $file["tmp_name"];
+        $size = $file["size"];
 
-        $target_dir         =   $path;                                                  // destination path
-        $target_file        =   $target_dir . basename($name);                    // destination file
-        $upload_ok          =   1;                                                      // upload checker
-        $image_file_type    =   strtolower(pathinfo($target_file, PATHINFO_EXTENSION));  // file type
+        $target_dir     =   $path;                                                  // destination path
+        $target_file    =   $target_dir . basename($name);                    // destination file
+        $upload_ok      =   true;                                                      // upload checker
+        $file_type      =   strtolower(pathinfo($target_file, PATHINFO_EXTENSION));  // file type
+
+
+        echo $target_file;
             
         if (!file_exists($path)):
-            mkdir($path, 0755, true);
+            mkdir($path, 0777, true);
         endif;
         
         // Check if file already exists
         if (file_exists($target_file)) {
-            $upload_ok = 0;
             return [true, $name];
         }
         // Check file size
         if ($size > 10000000) {
-            $upload_ok = 0;
-            return [false, "Image too big"];
+            return [false, "file too big"];
         }
         // Allow certain file formats
-        if ($image_file_type != "jpg" && $image_file_type != "png" && $image_file_type != "jpeg"
-            && $image_file_type != "gif"
-        ) {
-            $upload_ok = 0;
+        switch ($file_category) {
+            case 'image':
+                $extensions = ['jpg', 'jpeg', 'png', 'gif'];
+                break;
+            
+            case 'audio':
+                $extensions = ['wav', 'mp3', 'ogg', 'wav', 'm4a'];
+                break;
+        }
+
+        if (!in_array($file_type, $extensions)) {
             return [false, $name." format not acceptable"];
         }
         // Check if $upload_ok is set to 0 by an error
-        if ($upload_ok == 0) {
-            // return error
-            return [false, $name.": An error occured!"];
-        } elseif (move_uploaded_file($temp, $target_file)) {
+        if (move_uploaded_file($temp, $target_file)) {
             return [true, $name];
         } else {
-                return [false, "Wasn't able to upload {$name}"];
+            return [false, "Wasn't able to upload {$file_category}"];
         }
     }
 
@@ -126,5 +131,16 @@ class Base
     public function image_path($path_to_image)
     {
         return __URLROOT__.'/public/assets/img/' . $path_to_image;
+    }
+
+    public function permit($parent, $permitables, $array)
+    {
+        $permits = [];
+
+        foreach ($permitables as $key => $permitable) {
+            $permits[$permitable] = $array[$parent][$permitable];
+        }
+
+        return $permits;
     }
 }
