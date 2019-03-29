@@ -1,10 +1,6 @@
-header, main, footer {
-    padding-left    :   300px;
-}
-
 // Typography
 // font size
-@for $size from 10 to 100 {
+@for $size from 10 to 101 {
     .size-lg-#{$size} {
         font-size   :   $size;
     }
@@ -40,7 +36,7 @@ header, main, footer {
     }
 }
 
-@for $percentage from 0 to 100 {
+@for $percentage from 0 to 101 {
     .width-lg-#{$percentage} {
       width     :   $percentage * 1%;
     }
@@ -64,6 +60,10 @@ header, main, footer {
     &-lg-flex {
         display :   -webkit-flex;
         display :   flex;
+    }
+
+    &-lg-none {
+        display: none;
     }
 }
 
@@ -127,4 +127,18 @@ header, main, footer {
     .margin-left-lg-#{$size} {
         margin-left     : #{$size}px!important;
     }
-  }
+}
+
+
+.margin-left-lg-auto {
+    margin-left: auto!important;
+}
+
+.margin-right-lg-auto {
+    margin-right: auto!important;
+}
+
+// cursor
+.cursor-lg-enabled{
+    cursor: pointer;
+}

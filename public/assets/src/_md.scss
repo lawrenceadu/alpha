@@ -61,6 +61,10 @@
       display : -webkit-flex;
       display : flex;
   }
+  
+  &-md-none {
+      display: none;
+  }
 }
 
 
@@ -122,4 +126,18 @@
   .margin-left-md-#{$size} {
       margin-left     : #{$size}px!important;
   }
+}
+
+
+.margin-left-md-auto {
+    margin-left: auto!important;
+}
+
+.margin-right-md-auto {
+    margin-right: auto!important;
+}
+
+// cursor
+.cursor-md-enabled{
+    cursor: pointer;
 }
