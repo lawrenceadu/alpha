@@ -33,7 +33,7 @@ class Base
             include_once dirname(dirname(__dir__))."/public/html/404.html";
     }
 
-    public function file_upload($path, $file, $file_category = "image")
+    public function file_upload($path, $file, $file_category = "image"): Array
     {
         // get file details
         $name = strtolower(strtotime(date("Y-m-d H:i:s")).'_'.str_replace(" ", "",$file["name"]));
@@ -110,13 +110,14 @@ class Base
     }
 
 
-    function startsWith($haystack, $needle)
+    function startsWith($haystack, $needle): Bool
     {
         $length = strlen($needle);
         return (substr($haystack, 0, $length) === $needle);
     }
 
-    public function objectify($array){
+    public function objectify($array): Object
+    {
         return \json_decode(\json_encode($array));
     }
 
@@ -128,17 +129,17 @@ class Base
         exit();
     }
     
-    public function image_path($path_to_image)
+    public function image_path($path_to_image): String
     {
         return __URLROOT__.'/public/assets/img/' . $path_to_image;
     }
 
-    public function permit($parent, $permitables, $array)
+    public function permit($array, $permitables): Array
     {
         $permits = [];
 
         foreach ($permitables as $key => $permitable) {
-            $permits[$permitable] = $array[$parent][$permitable];
+            $permits[$permitable] = $array[$permitable];
         }
 
         return $permits;
