@@ -1,20 +1,20 @@
 {
-    "name": "Alpha",
-    "version": "0.0.2",
-    "description": "The Alpha Framework",
-    "author": "Adu Lawrence Kweku",
-    "license": "MIT",
-    "homepage": "https://alpha.com",
-    "devDependencies": {
-        "gulp": "^4.0.0",
-        "gulp-babel": "^8.0.0",
-        "gulp-sass": "^4.0.2",
-        "gulp-uglify": "^3.0.1",
-        "@babel/core": "^7.0.0",
-        "@babel/preset-env": "^7.0.0"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/lawrenceadu/alpha"
-    }
+  "name": "Alpha",
+  "version": "0.0.2",
+  "description": "The Alpha Framework",
+  "author": "Adu Lawrence Kweku",
+  "license": "MIT",
+  "homepage": "https://alpha.com",
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "gulp": "^4.0.0",
+    "gulp-babel": "^8.0.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-uglify": "^3.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lawrenceadu/alpha"
+  }
 }
