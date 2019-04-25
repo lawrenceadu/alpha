@@ -14,4 +14,4 @@
 
     use App\Lib\Core;
     // init core lib
-    $core = new Core();
+    new Core();
