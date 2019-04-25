@@ -1,10 +1,11 @@
-<?php
-    namespace App\Migrations;
+<?php 
+    namespace App\Helpers;
 
-    use App\Lib\Database;
+    use App\Lib\Base as Base;
 
-    class Schema extends Database
+    class BaseHelper extends Base
     {
+
         public function __construct()
         {
             parent::__construct();

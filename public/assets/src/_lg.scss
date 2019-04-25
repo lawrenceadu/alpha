@@ -2,7 +2,7 @@
 // font size
 @for $size from 10 to 101 {
     .size-lg-#{$size} {
-        font-size   :   $size;
+        font-size   :   #{$size}px;
     }
   }
   

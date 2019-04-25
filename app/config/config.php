@@ -1,6 +1,12 @@
 <?php 
     // get config.ini
     $config = parse_ini_file(__dir__.'/config.ini');
+
+    if (!isset($_SERVER["SERVER_PORT"]))
+        $_SERVER["SERVER_PORT"] = 80;
+
+    if (!isset($_SERVER['HTTP_HOST']))
+        $_SERVER["HTTP_HOST"] = NULL;
     
     // check protocol
     $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
@@ -38,10 +44,11 @@
 	ob_start("minify_output");
 
     // define db params
-    // define("__DBHOST__", $config['host']);
-    // define("__DBUSER__", $config['username']);
-    // define("__DBPASS__", $config['password']);
-    // define("__DBNAME__", $config['database']);
+    define("__DBHOST__", $config['host']);
+    define("__DBUSER__", $config['username']);
+    define("__DBPASS__", $config['password']);
+    define("__DBNAME__", $config['database']);
+    define("__DBDRIVER__", $config['driver']);
 
     // define configs
     define('__PROTOCOL__',  $protocol);

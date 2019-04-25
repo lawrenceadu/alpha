@@ -1,6 +1,10 @@
 <?php 
     namespace CLI;
 
+    if (file_exists(__DIR__ . '/vendor/autoload.php')):
+        require_once __DIR__ . '/vendor/autoload.php';
+    endif;
+
     class AlphaCLI
     {
         private $controller_path  = __dir__ . '/app/controllers/';
@@ -11,6 +15,40 @@
         public function __construct()
         {
 
+        }
+
+        public function run($command, $argv)
+        {
+            switch(strtolower($command)){
+                case "migration":
+                    foreach(glob(__DIR__ . '/app/migrations/*.php') as $migration):
+                        
+                        $path = explode("/", $migration);
+                        $file = end($path);
+                        
+                        $filename = str_replace(".php", "", $file);
+
+                        if ($filename !== "Schema"):
+                            require $migration;
+
+                            $filename = substr($filename, 15);
+                            $filename = ucwords(str_replace("_", " ", $filename));
+                            
+                            $file_array = explode(" ", $filename);
+
+                            if(strtolower($file_array[0]) == "create"):
+                                unset($file_array[0]);
+                                $file_array[count($file_array)] = substr($file_array[count($file_array)], 0, -1);
+                            endif;
+
+                            $filename = implode("", $file_array);
+
+                            new $filename;
+                        endif;
+                    endforeach;
+                    
+                    break;
+            }
         }
 
         public function generate($command, $argv)
@@ -86,24 +124,47 @@
                 $class = ucwords($class);
                 $class = str_replace(" ", "", $class);
 
+                try {
+                    //code...
+                } catch (\Throwable $th) {
+                    //throw $th;
+                }
+
                 if ($type == "migrate"):
-                    $func = "public function change()
+                    $func = "public function __construct()
                             {
-                                \$this->capsule::schema()->function();
+                                parent::__construct();
+
+                                \$this->change();
+                            }
+                            public function change()
+                            {
+                                \$this->capsule::schema()->table('', function(\$table){
+                                    
+                                });
+                                
                             }";
                 elseif ($type == "create"):
-                    $func = "public function up()
+                    $func = "
+                            public function __construct()
                             {
-                                \$this->capsule::schema()->create('{$output}s', function (\$table) {
-                                    \$table->increments('id');
-                                    // other table columns go here
-                                    \$table->timestamps();
-                                });
+                                parent::__construct();
+                                \$this->up();
+                            }
+                            public function up()
+                            {
+                                if(!\$this->capsule::schema()->hasTable('{$output}s')):
+                                    \$this->capsule::schema()->create('{$output}s', function (\$table) {
+                                        \$table->increments('id');
+                                        // other table columns go here
+                                        \$table->timestamps();
+                                    });
+                                endif;
                             }
                             
                             public function down()
                             {
-                                \$this->capsule::schema()->drop('{$output}s');
+                                \$this->capsule::schema()->dropIfExists('{$output}s');
                             }";
                 endif;
 
@@ -114,14 +175,8 @@
                                 use App\Migrations\Schema;
 
                                 class {$class} extends Schema {
-                                    public function __construct()
-                                    {
-                                        parent::__construct();
-                                    }
-
                                     {$func}
-                                }
-                            ?>")));
+                                }")));
                 fclose($fp);
             else :
                 echo "migration name does not exist";
@@ -336,8 +391,11 @@
             case 'gulp':
                 echo shell_exec("cd public && gulp");
                 break;
+            case "run":
+                $cli->run($subcommand, array_values($argv));
+                break;
             case 'init':
-                echo \shell_exec("composer update -d app/lib");
+                echo \shell_exec("composer update");
                 echo \shell_exec("cd public && npm install");
                 break;
             default:

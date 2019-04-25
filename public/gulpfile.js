@@ -7,7 +7,7 @@ const babel  = require("gulp-babel");
 
 gulp.task("compress", function (cb) {
     return gulp
-        .src("./assets/src/app.js")
+        .src("./assets/src/**/*.js")
         .pipe(babel({ presets: ["@babel/preset-env"].map(require.resolve) }))
         .pipe(uglify())
         .pipe(gulp.dest("./assets/js"));
@@ -21,7 +21,7 @@ gulp.task('sass', function () {
 });
 
 gulp.task('watch', function () {
-    gulp.watch("./assets/src/app.js", gulp.parallel(['compress']));
+    gulp.watch("./assets/src/**/*.js", gulp.parallel(['compress']));
     gulp.watch("./assets/src/**/*.scss", gulp.parallel(["sass"]));
 });
 

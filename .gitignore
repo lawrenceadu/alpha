@@ -3,5 +3,5 @@ public/node_modules
 public/lib/node_modules
 public/bin
 public/etc
-app/lib/vendor
+vendor
 app/lib/composer.lock

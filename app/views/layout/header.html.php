@@ -26,8 +26,7 @@
 
     <!-- js assets -->
     <?php foreach(["jquery","turbolinks","app"] as $js): ?>
-    <script type="text/javascript" src="public/assets/js/<?= $js ?>.js"></script>
+    <script type="text/javascript" src="public/assets/js/<?= $js ?>.js?v=0.0.1"></script>
     <?php endforeach; ?>
 </head>
 <body>
-    <main class="u-full-height u-full-width position-relative">

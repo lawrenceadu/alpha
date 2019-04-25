@@ -1,5 +1,4 @@
-		</main>
 
-		<div id="receiver"></div>
+		<div id="receiver" style="display: none!important;"></div>
     </body>
 </html>

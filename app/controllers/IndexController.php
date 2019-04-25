@@ -1,20 +1,31 @@
 <?php
+    namespace App\Controllers;
+    use App\Controllers\Base as Base;
 
-namespace App\Controllers;
-
-use App\Controllers\Base as Base;
-
-// use App\Helpers\Example;
-class Index extends Base
-{
-    public function __construct()
+    class Index extends Base
     {
-        // $this->carousel = $this->model('App\Models\ModelName');
-        // $this->example_helper = new Example();
-    }
+        public function __construct()
+        {
+            parent::__construct();        
+        }
 
-    public function index()
-    {
-        $this->view("app/index.html");
+        public function index()
+        {
+            $this->view("app/index.html");
+        }
+
+        public function create()
+        {
+
+        }
+
+        public function show()
+        {
+
+        }
+
+        public function destroy()
+        {
+
+        }
     }
-}

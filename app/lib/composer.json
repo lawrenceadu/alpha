@@ -1,8 +1,0 @@
-{
-    "require": {
-        "guzzlehttp/guzzle": "^6.3",
-        "deployer/deployer": "^6.4",
-        "klein/klein": "^2.1",
-        "illuminate/database": "^5.8"
-    }
-}
