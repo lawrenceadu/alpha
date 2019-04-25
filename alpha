@@ -3,43 +3,27 @@
 
     class AlphaCLI
     {
+        private $controller_path  = __dir__ . '/app/controllers/';
+        private $migration_path   = __dir__ . '/app/migrations/';
+        private $model_path       = __dir__ . '/app/models/';
+        private $helper_path      = __dir__ . '/app/helpers/';
+
         public function __construct()
         {
-            $this->controller_path = __dir__.'/app/controllers/';
-            $this->migration_path = __dir__.'/app/migration/';
-            $this->model_path = __dir__.'/app/models/';
+
         }
 
         public function generate($command, $argv)
         {
             switch (strtolower($command)) {
                 case 'controller':
-                    list($dirname, $filename) = $this->dir_and_file($argv[0], $this->controller_path, 'Controller.php');
-
-                    if (!file_exists($dirname)):
-                        mkdir($dirname, 0755, true);
-
-                        $paths = explode('/', $dirname);
-                        $base_controller = ucwords(strtolower(end($paths)));
-                        $children_path = end($paths);
-
-                        $base_path = str_replace("{$children_path}", "", $dirname);
-
-
-                        if(!file_exists("{$base_path}{$base_controller}Controller.php")){
-                            touch("{$base_path}{$base_controller}Controller.php");
-                        }
-                    endif;
-
-                    if(!file_exists($dirname . '/' . $filename)):
-                        touch($dirname . '/' . $filename);
-                    else:
-                        echo "Controller already exists";
-                        return false;
-                    endif;
-
-                    echo "{$filename} controller created successfully";
-                        break;
+                    return $this->controller($argv);
+                case 'migration':
+                    return $this->migration($argv);
+                case 'model':
+                    return $this->model($argv);
+                case 'helper':
+                    return $this->helper($argv);
                 default:
                     break;
             }
@@ -78,10 +62,221 @@
             }
         }
 
-        public function migrate()
+        private function migration($argv, $type = "migrate")
         {
-            shell_exec("php app/migration/Schema.php");
-            echo "migration complete";
+            if (isset($argv[0])) :
+                $output = ltrim(strtolower(preg_replace('/[A-Z]([A-Z](?![a-z]))*/', '_$0', $argv[0])), '_');
+
+                $file = date("YmdHis") . '_';
+
+                switch ($type) {
+                    case 'create':
+                        $file .= "create_" . $output . "s";
+                        break;
+                    
+                    default:
+                        $file .= $output;
+                        break;
+                }
+                
+                $file .= ".php";
+                touch($this->migration_path . $file);
+
+                $class = str_replace("_", " ", $output);
+                $class = ucwords($class);
+                $class = str_replace(" ", "", $class);
+
+                if ($type == "migrate"):
+                    $func = "public function change()
+                            {
+                                \$this->capsule::schema()->function();
+                            }";
+                elseif ($type == "create"):
+                    $func = "public function up()
+                            {
+                                \$this->capsule::schema()->create('{$output}s', function (\$table) {
+                                    \$table->increments('id');
+                                    // other table columns go here
+                                    \$table->timestamps();
+                                });
+                            }
+                            
+                            public function down()
+                            {
+                                \$this->capsule::schema()->drop('{$output}s');
+                            }";
+                endif;
+
+                $fp = fopen($this->migration_path . $file, 'w');
+                fwrite($fp, trim(preg_replace('/\t+/', '', "<?php  
+                                require_once __DIR__ . '/Schema.php';
+
+                                use App\Migrations\Schema;
+
+                                class {$class} extends Schema {
+                                    public function __construct()
+                                    {
+                                        parent::__construct();
+                                    }
+
+                                    {$func}
+                                }
+                            ?>")));
+                fclose($fp);
+            else :
+                echo "migration name does not exist";
+            endif;
+        }
+
+        private function controller($argv)
+        {
+            list($dirname, $filename) = $this->dir_and_file($argv[0], $this->controller_path, 'Controller.php');
+            $base_controller = "Base";
+            $base_path = __DIR__ . '/app/controller/';
+
+            if (!file_exists($dirname)) :
+                mkdir($dirname, 0755, true);
+
+                $paths = explode('/', $dirname);
+                $base_controller = ucwords(strtolower(end($paths)));
+                $children_path = end($paths);
+
+                $base_path = str_replace("{$children_path}", "", $dirname);
+
+
+                if (!file_exists("{$base_path}{$base_controller}Controller.php")) {
+                    touch("{$base_path}{$base_controller}Controller.php");
+
+                    $fp = fopen("{$base_path}{$base_controller}Controller.php", "w");
+                    fwrite($fp, trim(preg_replace('/\t+/', '', "<?php
+                                namespace App\Controllers;
+
+                                use App\Controllers\Base as Base;
+
+                                class Index extends Base
+                                {
+                                    public function __construct()
+                                    {
+                                        parent::__construct();
+                                    }
+
+                                    public function index()
+                                    {
+                                        \$this->view('path_in_view/index.html');
+                                    }
+                                }")));
+                    fclose($fp);
+                }
+            endif;
+
+            if (!file_exists($dirname . '/' . $filename)) :
+                touch($dirname . '/' . $filename);
+                $file = str_replace("Controller.php", "", $filename);
+
+                $fp = fopen($dirname . '/' . $filename, "w");
+                fwrite($fp, trim(preg_replace('/\t+/', '', "<?php
+                                namespace App\Controllers\\{$base_controller};
+                                use App\Controllers\\{$base_controller} as {$base_controller};
+
+                                class {$file} extends {$base_controller}
+                                {
+                                    public function __construct()
+                                    {
+                                        parent::__construct();        
+                                    }
+
+                                    public function index()
+                                    {
+                                        
+                                    }
+
+                                    public function create()
+                                    {
+
+                                    }
+
+                                    public function show()
+                                    {
+
+                                    }
+
+                                    public function destroy()
+                                    {
+
+                                    }
+                                }")));
+                fclose($fp);
+            else :
+                echo "Controller already exists";
+                return false;
+            endif;
+
+            echo "{$filename} controller created successfully";
+        }
+
+        private function model($argv)
+        {
+            if (isset($argv[0])):
+                $model = ucwords($argv[0]);
+                $file = $model . '.php';
+                
+                if (!file_exists($this->model_path . $file)):
+                    touch($this->model_path . $file);
+
+                    $fp = fopen($this->model_path . $file, "w");
+                    fwrite($fp, trim(preg_replace('/\t+/', '', "<?php
+                                    namespace App\Models;
+
+                                    use App\Lib\Database;
+                                    new Database();
+
+                                    use Illuminate\Database\Eloquent\Model as Eloquent;
+
+                                    class {$model} extends Eloquent
+                                    {
+
+                                    }")));
+                    fclose($fp);
+
+                    $this->migration($argv, "create");
+                else:
+
+                endif;
+                
+            else:
+
+            endif;
+        }
+
+        private function helper($argv)
+        {
+            if(isset($argv[0])):
+                $file = $argv[0] . 'Helper.php';
+
+                if (!file_exists($this->helper_path . $file)) :
+                    touch($this->helper_path . $file);
+
+                    $fp = fopen($this->helper_path . $file, "w");
+                    fwrite($fp, trim(preg_replace('/\t+/', '', "<?php 
+                                    namespace App\Helpers;
+
+                                    use App\Helpers\BaseHelper;
+
+                                    class {$argv[0]}Helper extends BaseHelper
+                                    {
+
+                                        public function __construct()
+                                        {
+                                            parent::__construct();
+                                        }
+                                    }")));
+                    fclose($fp);
+                else:
+
+                endif;
+            else:
+
+            endif;
         }
 
         private function dir_and_file($arg, $path, $file)
@@ -90,7 +285,7 @@
             $path_info = pathinfo($path_to_controller);
 
             $dirname = $path_info["dirname"] == "." ? $path : $path . $path_info["dirname"];
-            $filename = ucwords(strtolower(chop($path_info['filename'], 'Controller'))).'Controller.php';
+            $filename = ucwords(strtolower(str_replace("Controller", "", $path_info['filename']))).'Controller.php';
 
             return [$dirname, $filename];
         }
@@ -152,4 +347,3 @@
     else:
 
     endif;
-?>
