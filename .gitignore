@@ -5,3 +5,5 @@ public/bin
 public/etc
 vendor
 app/lib/composer.lock
+composer.lock
+package-lock.json
