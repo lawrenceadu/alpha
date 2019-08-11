@@ -9,6 +9,6 @@ class Base extends BaseLib
 {
     public function __construct()
     {
-
+        parent::__construct();
     }
 }
