@@ -5,7 +5,8 @@
         "klein/klein": "^2.1",
         "illuminate/database": "^5.8",
         "illuminate/events": "^5.8",
-        "doctrine/dbal": "^2.9"
+        "doctrine/dbal": "^2.9",
+        "twig/twig": "^2.0"
     },
     "autoload": {
         "classmap": [
@@ -13,7 +14,8 @@
             "app/lib",
             "app/helpers",
             "app/controllers",
-            "app/migrations"
+            "app/migrations",
+            "lib"
         ]
     }
 }
