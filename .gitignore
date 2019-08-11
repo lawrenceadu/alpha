@@ -1,9 +1,2 @@
-public/src
-public/node_modules
-public/lib/node_modules
-public/bin
-public/etc
+node_modules
 vendor
-app/lib/composer.lock
-composer.lock
-package-lock.json
