@@ -389,14 +389,14 @@
 
                 break;
             case 'gulp':
-                echo shell_exec("cd public && gulp");
+                echo shell_exec("gulp");
                 break;
             case "run":
                 $cli->run($subcommand, array_values($argv));
                 break;
             case 'init':
                 echo \shell_exec("composer update");
-                echo \shell_exec("cd public && npm install");
+                echo \shell_exec("yarn install");
                 break;
             default:
                 
