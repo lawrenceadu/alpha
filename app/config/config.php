@@ -23,26 +23,6 @@
             break;
     }
 
-    // minify html
-    function minify_output($buffer){
-        $search = array(
-            '/\>[^\S ]+/s',
-            '/[^\S ]+\</s',
-            '/(\s)+/s'
-        );
-        $replace = array(
-            '>',
-            '<',
-            '\\1'
-        );
-        if (preg_match("/\<html/i", $buffer) == 1 && preg_match("/\<\/html\>/i", $buffer) == 1) {
-            $buffer = preg_replace($search, $replace, $buffer);
-        }
-        return $buffer;
-	}
-	// run minifier
-	ob_start("minify_output");
-
     // define db params
     define("__DBHOST__", $config['host']);
     define("__DBUSER__", $config['username']);
