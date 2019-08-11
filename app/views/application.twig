@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+        <base href="/">
+        <title>{{ title ?: 'Alpha Framework' }}</title>
+        
+        <!-- meta data -->
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="{{ author ?: 'Alpha team' }}">
+        <meta name="keywords" content="{{ keywords ?: '' }}">
+        <meta name="description" content="{{ description ?: '' }}">  
+
+        <!-- meta og -->
+        <meta property="og:image" content="{{ img ?: '/public/assets/img/logo/logo.png' }}">
+        <meta property="og:description" content="{{ description ?: '' }}">
+        <meta property="og:title" content="{{ title ?: 'Alpha Framework' }}">
+        <meta name="theme-color" content="#FFF">
+        
+        <!-- css assets -->
+        <link rel="stylesheet" href="public/assets/css/app.css?v=0.0.1">
+        <link rel="shortcut icon" href="public/assets/img/logo/favicon.ico">
+        <link rel="manifest" href="public/manifest.json">
+
+        <!-- js assets -->
+        <script type="text/javascript" src="public/assets/js/app.js?v=0.0.1"></script>
+    </head>
+    <body>
+        {% block navigation %}
+
+        {%  endblock %}
+
+        {% block yield %}
+
+        {% endblock %}
+
+        {% block footer %}
+
+        {% endblock %}
+
+		<div id="receiver" style="display: none!important;"></div>
+    </body>
+</html>
