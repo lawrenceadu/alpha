@@ -19,13 +19,8 @@
     },
     "autoload": {
         "classmap": [
-            "app/models",
-            "app/lib",
-            "app/helpers",
-            "app/controllers",
-            "app/migrations",
-            "lib",
-            "app/command"
+            "app",
+            "lib"
         ]
     }
 }
