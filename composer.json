@@ -6,7 +6,9 @@
         "illuminate/database": "^5.8",
         "illuminate/events": "^5.8",
         "doctrine/dbal": "^2.9",
-        "twig/twig": "^2.0"
+        "twig/twig": "^2.0",
+        "symfony/console": "^4.3",
+        "illuminate/support": "^5.8"
     },
     "autoload": {
         "classmap": [
@@ -15,7 +17,8 @@
             "app/helpers",
             "app/controllers",
             "app/migrations",
-            "lib"
+            "lib",
+            "app/command"
         ]
     }
 }

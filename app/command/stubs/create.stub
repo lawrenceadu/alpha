@@ -1,0 +1,25 @@
+<?php 
+    use App\Migrations\Schema;
+    
+    class ClassName extends Schema {
+        
+        public function __construct()
+        {
+            parent::__construct();
+        }
+        public function up()
+        {
+            if(!$this->capsule::schema()->hasTable("tableName")):
+                $this->capsule::schema()->create("tableName", function ($table) {
+                    $table->increments('id');
+                    // other table columns go here
+                    $table->timestamps();
+                });
+            endif;
+        }
+        
+        public function down()
+        {
+            $this->capsule::schema()->dropIfExists("tableName");
+        }
+    }

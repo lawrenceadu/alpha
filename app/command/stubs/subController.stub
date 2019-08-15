@@ -1,0 +1,34 @@
+<?php
+    namespace App\Controllers\BaseController;
+    
+    use App\Controllers\BaseController as BaseController;
+    use Klein\Request;
+    use Klein\Response;
+    
+    class ClassName extends BaseController
+    {
+        public function __construct()
+        {
+            parent::__construct();        
+        }
+
+        public function index()
+        {
+            
+        }
+
+        public function create()
+        {
+
+        }
+
+        public function show()
+        {
+
+        }
+
+        public function destroy()
+        {
+
+        }
+    }

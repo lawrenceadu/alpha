@@ -1,0 +1,22 @@
+
+<?php 
+    use App\Migrations\Schema;
+
+    class ClassName extends Schema {
+        public function __construct()
+        {
+            parent::__construct();
+        }
+
+        public function up()
+        {
+            $this->capsule::schema()->table('', function($table){
+                
+            });
+        }
+
+        public function down()
+        {
+
+        }
+    }
