@@ -2,6 +2,9 @@
     "name": "lawrenceadu/alpha",
     "type": "project",
     "description": "A simple but powerful php framework",
+    "license": "MIT",
+    "homepage": "https://github.com/lawrenceadu/alpha/wiki",
+    "version": "0.1",
     "require": {
         "php": "^7.2",
         "guzzlehttp/guzzle": "^6.3",
