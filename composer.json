@@ -1,5 +1,9 @@
 {
+    "name": "lawrenceadu/alpha",
+    "type": "project",
+    "description": "A simple but powerful php framework",
     "require": {
+        "php": "^7.2",
         "guzzlehttp/guzzle": "^6.3",
         "deployer/deployer": "^6.4",
         "klein/klein": "^2.1",
