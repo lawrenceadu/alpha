@@ -11,6 +11,7 @@
     use \App\Command\DatabaseMigrationCommand;
     use \App\Command\DeleteControllerCommand;
     use \App\Command\ServerCommand;
+    use \App\Command\ConsoleCommand;
 
     $app = new Application();
 
@@ -22,5 +23,6 @@
     $app->add(new DatabaseMigrationCommand());
     $app->add(new DeleteControllerCommand());
     $app->add(new ServerCommand());
+    $app->add(new ConsoleCommand());
 
     $app->run();

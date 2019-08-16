@@ -23,5 +23,8 @@
             "app",
             "lib"
         ]
+    },
+    "require-dev": {
+        "psy/psysh": "@stable"
     }
 }
