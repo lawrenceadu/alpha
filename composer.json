@@ -4,8 +4,7 @@
     "description": "A simple but powerful php framework",
     "license": "MIT",
     "homepage": "https://github.com/lawrenceadu/alpha/wiki",
-    "version": "0.1",
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
         "php": "^7.2",
