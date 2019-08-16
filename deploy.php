@@ -38,12 +38,12 @@ host('{{}}')
     ->identityFile('');
     
 task('vendor', function(){
-    run('cd {{release_path}} && {{bin/composer}} {{composer_options}} -d app/lib');
+    run('cd {{release_path}} && {{bin/composer}} {{composer_options}}');
 });
 
 task('migrate', function(){
     run('cp ~/path/to/{{application}}/config.ini {{release_path}}/app/config/');
-    run('php {{release_path}}/app/migration/Schema.php');   
+    run('php alpha db:migrate');   
 });
 
 // Tasks
