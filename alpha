@@ -2,27 +2,21 @@
     require __DIR__.'/vendor/autoload.php';
 
     use Symfony\Component\Console\Application;
+    use \App\Command;
 
-    // use commands
-    use \App\Command\GenerateMigrationCommand;
-    use \App\Command\GenerateModelCommand;
-    use \App\Command\GenerateHelperCommand;
-    use \App\Command\GenerateControllerCommand;
-    use \App\Command\DatabaseMigrationCommand;
-    use \App\Command\DeleteControllerCommand;
-    use \App\Command\ServerCommand;
-    use \App\Command\ConsoleCommand;
+    \Dotenv\Dotenv::create(__DIR__)->load();
 
     $app = new Application();
-
     // ... register commands
-    $app->add(new GenerateMigrationCommand());
-    $app->add(new GenerateModelCommand());
-    $app->add(new GenerateHelperCommand());
-    $app->add(new GenerateControllerCommand());
-    $app->add(new DatabaseMigrationCommand());
-    $app->add(new DeleteControllerCommand());
-    $app->add(new ServerCommand());
-    $app->add(new ConsoleCommand());
+    $app->add(new Command\GenerateMigrationCommand());
+    $app->add(new Command\GenerateModelCommand());
+    $app->add(new Command\GenerateHelperCommand());
+    $app->add(new Command\GenerateControllerCommand());
+    $app->add(new Command\DatabaseMigrationCommand());
+    $app->add(new Command\DeleteControllerCommand());
+    $app->add(new Command\ServerCommand());
+    $app->add(new Command\ConsoleCommand());
+    $app->add(new Command\DatabaseRollbackCommand());
+    $app->add(new Command\DatabaseSeedCommand());
 
     $app->run();

@@ -1,7 +1,5 @@
 <?php 
-    use App\Migrations\Schema;
-    
-    class ClassName extends Schema {
+    class ClassName extends \App\Lib\Database {
         
         public function __construct()
         {

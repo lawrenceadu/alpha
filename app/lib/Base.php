@@ -5,20 +5,17 @@
     */
 namespace App\Lib;
 
-use App\Models as Model;
 class Base
 {
     public $twig;
-
     public function __construct()
     {
-        $loader = new \Twig\Loader\FilesystemLoader(__ROOT__ . '/app/views');
+        $loader = new \Twig\Loader\FilesystemLoader(dirname(dirname(__DIR__)) . '/app/views');
         $this->twig = new \Twig\Environment($loader);
     }
 
     public function view($view, $data = [])
     {
-        error_log($view);
         if (file_exists(dirname(__dir__)."/views/{$view}.twig")):
             echo $this->twig->render($view . '.twig', $data);
         else:
@@ -48,7 +45,7 @@ class Base
             return [true, $name];
         }
         // Check file size
-        if ($size > 10000000) {
+        if ($size > 2000000) {
             return [false, "file too big"];
         }
         // Allow certain file formats
@@ -63,7 +60,7 @@ class Base
         }
 
         if (!in_array($file_type, $extensions)) {
-            return [false, $name." format not acceptable"];
+            return [false, $file['name']." format not acceptable"];
         }
         // Check if $upload_ok is set to 0 by an error
         if (move_uploaded_file($temp, $target_file)) {

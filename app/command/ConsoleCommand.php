@@ -5,10 +5,7 @@ namespace App\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Process\Process;
-use Symfony\Component\Process\Exception\ProcessFailedException;
-use Illuminate\Support\Str;
+use Psy\Shell;
 
 class ConsoleCommand extends Command
 {
@@ -26,6 +23,7 @@ class ConsoleCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln("Alpha interactive shell activated:");
-        $output->write(shell_exec("./vendor/psy/psysh/bin/psysh "));
+        $shell = new Shell();
+        $output->write($shell->run());
     }
 }

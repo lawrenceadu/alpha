@@ -1,30 +1,33 @@
 {
     "name": "lawrenceadu/alpha",
-    "type": "project",
     "description": "A simple but powerful php framework",
     "license": "MIT",
     "homepage": "https://github.com/lawrenceadu/alpha/wiki",
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "require": {
-        "php": "^7.2",
-        "guzzlehttp/guzzle": "^6.3",
-        "deployer/deployer": "^6.4",
+        "php": "^7.1.3",
         "klein/klein": "^2.1",
-        "illuminate/database": "^5.8",
-        "illuminate/events": "^5.8",
         "doctrine/dbal": "^2.9",
         "twig/twig": "^2.0",
-        "symfony/console": "^4.3",
-        "illuminate/support": "^5.8"
+        "vlucas/phpdotenv": "^3.4",
+        "firebase/php-jwt": "^5.0",
+        "illuminate/support": "^6.0", 
+        "illuminate/database": "^6.0",
+        "illuminate/console": "^6.0",
+        "illuminate/pagination": "^6.0",
+        "illuminate/container": "^6.0",
+        "illuminate/events": "^6.0",
+        "psy/psysh": "@stable",
+        "symfony/console": "^4.3"
     },
     "autoload": {
         "classmap": [
-            "app",
-            "lib"
+            "app"
         ]
     },
     "require-dev": {
-        "psy/psysh": "@stable"
+        "deployer/deployer": "^6.4"        
+    },
+    "config": {
+        "optimize-autoloader": true
     }
 }

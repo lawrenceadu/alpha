@@ -10,10 +10,10 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Illuminate\Support\Str;
 
-class DatabaseMigrationCommand extends Command
+class DatabaseRollbackCommand extends Command
 {
 
-    protected static $defaultName = "db:migrate";
+    protected static $defaultName = "db:rollback";
 
     public function __construct()
     {
@@ -25,30 +25,36 @@ class DatabaseMigrationCommand extends Command
     {
         $this
             ->setDescription("used to run migrations")
-            ->setHelp("Command used to run migration");
+            ->setHelp("Command used to run migration")
+            ->addArgument('step', InputArgument::REQUIRED, 'step required');
     }
 
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->_runMigrations($output);
+        $this->_runMigrations($input, $output);
     }
 
-    public function _runMigrations($output)
+    public function _runMigrations($input, $output)
     {
         $migrations = glob($this->migrationPath . '*.php');
+        $step = $input->getArgument('step');
+
+        if($step !== 'all'):
+            $migrations = array_slice($migrations, -abs($step), abs($step), true);
+        endif;
 
         foreach ($migrations as $migration) {
             $file = pathinfo($migration);
             $filename = $file['filename'];
 
-            if ($filename !== "Schema"):
-                $className = '\App\Migrations\\' . Str::studly(\substr($filename, 15));
-                $class = new $className;
-                $class->up();
+            require_once $migration;
+            $className = Str::studly(\substr($filename, 15));
 
-                $output->writeln('db migration on => ' . str_replace(dirname(__DIR__) . '/migrations/', "", $migration));
-            endif;
+            $class = new $className;
+            $class->down();
+
+            $output->writeln('db rollback on => ' . str_replace(dirname(__DIR__) . '/migrations/', "", $migration));
         }
     }
 }

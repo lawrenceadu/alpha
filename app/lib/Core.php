@@ -15,11 +15,12 @@ class Core
         // assign get url to url variable
         list($url, $path)  = $this->getUrl();
 
-        if($url[0] == "api")
+        if($url[0] == "api"):
+            header("Access-Control-Allow-Origin: *");
             $route = new Routes\Api($url, $path);
-        else    
+        else:    
             $route = new Routes\Web($url, $path);
-
+        endif;
 
         $route->request();
     }
