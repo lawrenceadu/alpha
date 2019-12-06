@@ -41,9 +41,14 @@ task('vendor', function(){
     run('cd {{release_path}} && {{bin/composer}} {{composer_options}}');
 });
 
+task('upload', function(){
+    upload(".env.prod", "{{release_path}}/.env");
+});
+
 task('migrate', function(){
-    run('cp ~/path/to/{{application}}/config.ini {{release_path}}/app/config/');
-    run('php alpha db:migrate');   
+    run('{{release_path}}');
+    run('php alpha db:migrate');
+    // can run a rollback and seed in this task   
 });
 
 // Tasks
@@ -56,6 +61,7 @@ task('deploy', [
     'deploy:update_code',
     'deploy:shared',
     'deploy:writable',
+    'upload',
     'vendor',
     'migrate',
     'deploy:clear_paths',
