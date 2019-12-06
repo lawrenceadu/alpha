@@ -5,6 +5,8 @@
     */
 namespace App\Lib;
 
+use Illuminate\Support\Str;
+
 class Base
 {
     public $twig;
@@ -17,7 +19,7 @@ class Base
     public function view($view, $data = [])
     {
         if (file_exists(dirname(__dir__)."/views/{$view}.twig")):
-            echo $this->twig->render($view . '.twig', $data);
+            return $this->twig->render($view . '.twig', $data);
         else:
             require_once dirname(dirname(__dir__))."/public/html/404.html";
         endif;
@@ -26,7 +28,7 @@ class Base
     public function file_upload($path, $file, $file_category = "image"): Array
     {
         // get file details
-        $name = strtolower(strtotime(date("Y-m-d H:i:s")).'_'.str_replace(" ", "",$file["name"]));
+        $name = strtolower(Str::random() . '-' .str_replace(" ", "", $file["name"]));
         $temp = $file["tmp_name"];
         $size = $file["size"];
 
@@ -68,27 +70,5 @@ class Base
         } else {
             return [false, "Wasn't able to upload {$file_category}"];
         }
-    }
-
-    function startsWith($haystack, $needle): Bool
-    {
-        $length = strlen($needle);
-        return (substr($haystack, 0, $length) === $needle);
-    }
-
-    public function objectify($array): Object
-    {
-        return \json_decode(\json_encode($array));
-    }
-
-    public function permit($array, $permitables): Array
-    {
-        $permits = [];
-
-        foreach ($permitables as $key => $permitable) {
-            $permits[$permitable] = $array[$permitable];
-        }
-
-        return $permits;
     }
 }
