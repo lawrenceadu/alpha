@@ -2,7 +2,7 @@
     namespace App\Controllers;
 
     use App\Controllers\Base as Base;
-    use Klein\Request;
+    use Psr\Http\Message\ServerRequestInterface as Request;
 
     class Index extends Base
     {
@@ -13,21 +13,6 @@
 
         public function index(Request $request)
         {
-            $this->view("app/index");
-        }
-
-        public function create()
-        {
-
-        }
-
-        public function show()
-        {
-
-        }
-
-        public function destroy()
-        {
-
+           return $this->view("app/index");
         }
     }
