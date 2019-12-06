@@ -47,10 +47,6 @@ class DeleteControllerCommand extends Command
 
             if ($is_empty === true):
                 $path = explode('/', $dirname);
-                $base_controller = Str::studly(strtolower(end($path))) . "Controller.php";
-                $base_path = str_replace(end($path), "", $dirname);
-
-                unlink($base_path . $base_controller);
                 rmdir($dirname);
             endif;
         else:
