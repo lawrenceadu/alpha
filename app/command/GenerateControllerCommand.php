@@ -45,32 +45,17 @@ class GenerateControllerCommand extends Command
         if(!file_exists($dirname)):
             // check directory if not exists
             mkdir($dirname, 0755, true);
-
-            $paths = explode('/', $dirname);
-            $this->baseController = Str::studly((strtolower(end($paths))));
-            $child_path = end($paths);
-
-            $base_path = str_replace($child_path, "", $dirname);
-
-            if(!file_exists($base_path . $this->baseController . 'Controller.php')):
-                $file = $base_path . $this->baseController . 'Controller.php';
-                // create base controller
-                touch($file);
-
-                $fileContent = file_get_contents(__DIR__ . '/stubs/controller.stub');
-                $fileContent = str_replace("ClassName", $this->baseController, $fileContent);
-                file_put_contents($file, $fileContent);
-            endif;
         endif;
 
         if (!file_exists($dirname . '/' . $filename)):
             $file = $dirname . '/' . $filename;
             $controller = Str::studly(str_replace("Controller.php", "", $filename));
+            
             // create the main controller file
             touch($file);  
 
-            $fileContent = file_get_contents(__DIR__ . '/stubs/subController.stub');
-            $fileContent = str_replace(["ClassName", "BaseController"], [$controller, $this->baseController], $fileContent);
+            $fileContent = file_get_contents(__DIR__ . '/stubs/controller.stub');
+            $fileContent = str_replace("ClassName", $controller, $fileContent);
             file_put_contents($file, $fileContent);
 
             return "Controller created successfully";
