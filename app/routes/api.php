@@ -1,19 +1,20 @@
 <?php 
-    namespace App\Routes;
+    use MiladRahimi\PhpRouter\Router;
+    use MiladRahimi\PhpRouter\Exceptions\RouteNotFoundException;
+    use App\Middlewares\UserAuthenticate;
 
-    use App\Controllers as Controller;
-    use \Klein\Klein;
+    $router = new Router('', 'App\Controllers\Api\V1');
 
-    class Api {
-        public function __construct()
-        {
-            $this->klein = new Klein();
-        }
+    $router->group(['prefix' => '/api/v1'], function (Router $router) {
+        // open apis
 
-        public function request() {
-            $this->klein->respond("GET", "/?", [new \App\Controllers\Index(), 'index']);
+        $router->group(['middleware' => UserAuthenticate::class], function (Router $router) {
+            // authenticated apis
+        });
+    });
 
-            $this->klein->dispatch();
-        }
+    try {
+        $router->dispatch();
+    } catch (RouteNotFoundException $th) {
+        //throw $th;
     }
-?>

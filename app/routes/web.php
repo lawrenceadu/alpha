@@ -1,19 +1,12 @@
 <?php 
-    namespace App\Routes;
+    use MiladRahimi\PhpRouter\Router;
+    use MiladRahimi\PhpRouter\Exceptions\RouteNotFoundException;
+    
+    $router = new Router('', 'App\Controllers');
 
-    use App\Controllers as Controller;
-    use \Klein\Klein;
+    $router->get("/", "Index@index");
 
-    class Web {
-        public function __construct()
-        {
-            $this->klein = new Klein();
-        }
-
-        public function request() {
-            $this->klein->respond("GET", "/?", [new \App\Controllers\Index(), 'index']);
-
-            $this->klein->dispatch();
-        }
+    try {
+        $router->dispatch();
+    }catch(RouteNotFoundException $e){
     }
-?>
