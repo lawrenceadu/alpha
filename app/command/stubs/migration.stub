@@ -1,5 +1,5 @@
-
 <?php 
+    namespace App\Migrations;
     class ClassName extends \App\Lib\Database {
         public function __construct()
         {

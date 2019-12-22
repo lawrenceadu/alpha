@@ -50,6 +50,7 @@ class DatabaseRollbackCommand extends Command
 
             require_once $migration;
             $className = Str::studly(\substr($filename, 15));
+            $className = "\App\Migrations\\$className";
 
             $class = new $className;
             $class->down();

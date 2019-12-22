@@ -1,9 +1,8 @@
 <?php
     namespace App\Controllers;
 
-    use App\Controllers\Base as Base;
-    use Klein\Request;
-    use Klein\Response;
+    use App\Controllers\Base;
+    use Psr\Http\Message\ServerRequestInterface as Request;
 
     class ClassName extends Base
     {
@@ -12,10 +11,6 @@
             parent::__construct();
         }
 
-        /** 
-         * 
-         * 
-        */
         public function index()
         {
 

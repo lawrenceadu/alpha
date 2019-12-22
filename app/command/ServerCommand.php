@@ -25,7 +25,6 @@ class ServerCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $port = $input->getArgument("port") ? (int)$input->getArgument("port") : 3000; 
-
-        $output->write(shell_exec("php -S localhost:{$port}"));
+        $output->write(shell_exec("php -S localhost:{$port} -t public"));
     }
 }
